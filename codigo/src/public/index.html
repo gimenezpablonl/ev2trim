@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>EV2TRIM</title>
+</head>
+<body>
+<script>
+    const url = "http://localhost:3000/api";
+    async function getFetch(){
+    const options = { 
+        method: 'GET',
+        headers:{
+            'Content-Type': 'application/json'
+        }
+    };
+    
+    const response = await fetch(url, options).catch(error => console.error(error));
+    const data = await response.json();
+    createTable(data);
+}
+    function delFetch(id){
+    const options = { 
+        method: 'DELETE',
+        body: JSON.stringify({id:id}),
+        headers:{
+            'Content-Type': 'application/json'
+        }
+    }
+    console.log(id);
+    fetch(url, options)
+        .then(res => location.href ="/")
+        .catch(error => console.error(error));
+}
+getFetch();
+    function createTable(data){
+    var body = document.getElementsByTagName("body")[0];
+    var tbl = document.createElement("table");
+    var tblBody = document.createElement("tbody");
+    for (let j = 0; j < data.length ;j++){
+        row = document.createElement("tr");
+        cell = document.createElement("td");
+        cellText = document.createTextNode(data[j].marca);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+        cell = document.createElement("td");
+        cellText = document.createTextNode(data[j].modelo);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+        cell = document.createElement("td");
+        cellText = document.createTextNode(data[j].cantProcesadores);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+        cell = document.createElement("td");
+        let button = document.createElement("button");
+        let buttonText = document.createTextNode("X");
+        button.addEventListener("click", delFetch(data[j].id));
+        button.appendChild(buttonText);
+        cell.appendChild(button);
+        row.appendChild(cell);
+        tblBody.appendChild(row);
+    }
+    tbl.appendChild(tblBody);
+    body.appendChild(tbl);
+    tbl.setAttribute("border", "1");
+}
+</script>
+</body>
+</html>
