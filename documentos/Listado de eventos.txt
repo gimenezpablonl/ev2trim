@@ -1,0 +1,4 @@
+1. Usuario solicita alta de nuevo celular.
+2. Usuario solicita baja de celular existente.
+3. Usuario solicita búsqueda de celular existente.
+4. Usuario solicita modificación de celular existente.
